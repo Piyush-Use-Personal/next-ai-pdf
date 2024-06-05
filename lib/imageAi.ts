@@ -12,6 +12,7 @@ export class ImageAI {
         this.systemPrompt = '';
         this.openAI = new OpenAI({
             apiKey: OPEN_AI_API_KEY,
+            dangerouslyAllowBrowser: true,
         });
     }
 
