@@ -1,4 +1,5 @@
 import { OPEN_AI_API_KEY } from "@/constant/env";
+import { ImageSize } from "@/types";
 import OpenAI from "openai";
 
 export class ImageAI {
@@ -16,15 +17,16 @@ export class ImageAI {
         });
     }
 
-    async generateImage(prompt: string): Promise<string> {
+    async generateImage(prompt: string, size: ImageSize, n: number) {
         try {
             const response = await this.openAI.images.generate({
                 prompt: prompt,
-                n: 1,
-                size: "512x512",
+                n,
+                response_format: 'b64_json',
+                size,
             });
 
-            const imageUrl = response.data[0]?.url;
+            const imageUrl = response.data;
             if (imageUrl) {
                 return imageUrl;
             } else {
