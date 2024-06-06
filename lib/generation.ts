@@ -20,18 +20,35 @@ export class GenerationAI {
 
     async generate(prompt: string, options?: IOptions): Promise<IPage[]> {
         const opts = { ...defaultOptions, ...options }
-        let text, image
+        let contents, images
         if (opts.getImage) {
-            image = await this.imageAi.generateImage(prompt, opts.imageSize, opts.numberOfPages ?? 1)
+            images = await this.imageAi.generateImage(prompt, opts.imageSize, opts.numberOfPages ?? 1)
         }
 
         if (opts.getText) {
-            text = await this.promptAi.generatePrompt(prompt)
+            contents = await this.promptAi.generatePrompt(prompt, opts.numberOfPages ?? 1)
+        }
+       
+        const pages: IPage[] = []
+
+        if(contents) {
+            for (let i = 0; i < contents.length; i++) {
+                pages[i] = {
+                    ...(pages[i]),
+                    text: contents[i],
+                }
+            }
         }
 
-        return [{
-            text,
-            image: image ? image[0].b64_json : undefined
-        }]
+        if(images) {
+            for (let i = 0; i < images.length; i++) {
+                pages[i] = {
+                    ...(pages[i]),
+                    image: images[i].b64_json,
+                }
+            }
+        }
+
+        return pages;
     }
 }
