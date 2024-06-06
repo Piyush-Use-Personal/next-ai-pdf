@@ -35,7 +35,7 @@ const TypeWriter: React.FC<TypeWriterProps> = ({ words = ["Typewriter"], delay =
 
   return (
     <div className="w-full h-full text-black flex  my-16">
-      <h1 className="text-[50px] font-bold h-6 text-blue-700">{text}</h1>
+      <h1 className="text-[50px] xs:text-[16px] font-bold h-6 text-blue-700">{text}</h1>
     </div>
   );
 };
