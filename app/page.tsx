@@ -44,6 +44,7 @@ export default function Home() {
   }
 
   const handleGenerate = async () => {
+    if(loading) return
     if (!validateOptions()) return
     try {
       setError('')
@@ -256,7 +257,7 @@ export default function Home() {
                 type="button"
                 loading={false}
                 onClick={handleStartOver}
-                label="Start over"
+                label="Reset"
               />
             }
           </div>
