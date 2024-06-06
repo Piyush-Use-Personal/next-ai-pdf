@@ -2,20 +2,22 @@
 import { useState, useEffect } from "react";
 
 const useIsMobile = () => {
-    const [width, setWidth] = useState<number>(window.innerWidth);
+    const [width, setWidth] = useState<number>(800);
 
     function handleWindowSizeChange() {
-        setWidth(window.innerWidth);
+        if (typeof window !== 'undefined')
+            setWidth(window.innerWidth);
     }
     useEffect(() => {
         if (typeof window !== 'undefined') {
             window.addEventListener('resize', handleWindowSizeChange);
         }
         return () => {
-            window.removeEventListener('resize', handleWindowSizeChange);
+            if (typeof window !== 'undefined')
+                window.removeEventListener('resize', handleWindowSizeChange);
         }
     }, []);
-    
+
     const isMobile = width <= 768;
     return isMobile;
 };
